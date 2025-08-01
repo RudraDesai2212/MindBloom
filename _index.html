@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindBloom Games</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f8ff;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      padding: 2rem;
+      text-align: center;
+      background-color: #4CAF50;
+      color: white;
+      width: 100%;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h2 {
+      margin: 1rem 0 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 1.5rem;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background-color 0.2s;
+    }
+
+    .card a:hover {
+      background-color: #45a049;
+    }
+
+    .icon {
+      font-size: 3rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      .card h2 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🧠 MindBloom Cognitive Games</h1>
+    <p>Fun and brain-boosting activities for all ages</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="icon">🧮</div>
+      <h2>Quick Math</h2>
+      <a href="Quick Math.html">Play Now</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🧩</div>
+      <h2>Memory Match</h2>
+      <a href="Memory Match.html">Play Now</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🔤</div>
+      <h2>Word Guess</h2>
+      <a href="Word Guess.html">Play Now</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">📦</div>
+      <h2>Vocab Test</h2>
+      <a href="Vocab Test.html">Play Now</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🔁</div>
+      <h2>Sequence Memory</h2>
+      <a href="Sequence Memory.html">Play Now</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🕹️</div>
+      <h2>2048 Game</h2>
+      <a href="2048.html">Play Now</a>
+    </div>
+  </div>
+
+</body>
+</html>

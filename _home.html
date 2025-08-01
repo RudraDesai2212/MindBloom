@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to MindBloom</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f7f3;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(to right, #6a994e, #a7c957);
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 3rem;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      margin-top: 0.7rem;
+      font-weight: 300;
+    }
+
+    .content {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .section {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .section img {
+      width: 100%;
+      max-width: 450px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .section-text {
+      flex: 1;
+    }
+
+    .section-text h2 {
+      color: #386641;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .section-text p,
+    .section-text ul {
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .section-text ul {
+      padding-left: 1.2rem;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .cta button {
+      background-color: #6a994e;
+      color: white;
+      padding: 1rem 2.2rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+
+    .cta button:hover {
+      background-color: #386641;
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🧠 Welcome to MindBloom</h1>
+    <p>Gentle cognitive training crafted for seniors and elders</p>
+  </header>
+
+  <div class="content">
+
+    <div class="section">
+      <img src="https://source.unsplash.com/featured/?elderly,happy" alt="Elderly using MindBloom">
+      <div class="section-text">
+        <h2>What is MindBloom?</h2>
+        <p>MindBloom is a gentle, fun, and enriching platform designed especially for older adults to keep their minds active. From memory to attention to problem-solving, we help seniors enjoy mental fitness daily.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-text">
+        <h2>Why Seniors Love MindBloom</h2>
+        <ul>
+          <li>✅ Games tailored for aging minds—simple yet powerful</li>
+          <li>✅ Helps reduce the risk of cognitive decline</li>
+          <li>✅ Easy to use with large text and calming visuals</li>
+          <li>✅ Encourages daily engagement and positivity</li>
+          <li>✅ Designed with input from geriatric therapists</li>
+        </ul>
+      </div>
+      <img src="https://source.unsplash.com/featured/?grandparents,technology" alt="Seniors playing games">
+    </div>
+
+    <div class="section">
+      <img src="https://source.unsplash.com/featured/?elderly,relax" alt="Relaxed seniors">
+      <div class="section-text">
+        <h2>Mental Fitness at Any Age</h2>
+        <p>It’s never too late to care for your mind. MindBloom offers daily routines that support memory retention, attention span, and emotional wellbeing for a vibrant life after 60.</p>
+      </div>
+    </div>
+
+    <div class="cta">
+      <button onclick="window.location.href='_login.html'">Start Now</button>
+    </div>
+
+  </div>
+
+</body>
+</html>

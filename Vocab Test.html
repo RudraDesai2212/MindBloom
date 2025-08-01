@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Word Match - MindBloom</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+      text-align: center;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+      color: #2e7d32;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .word, .definition {
+      padding: 14px;
+      border-radius: 12px;
+      width: 200px;
+      text-align: center;
+      transition: all 0.3s ease;
+      font-size: 1.1em;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .word {
+      background-color: #90caf9;
+      cursor: grab;
+      font-weight: bold;
+      color: #0d47a1;
+    }
+
+    .word:hover {
+      background-color: #64b5f6;
+      transform: scale(1.05);
+    }
+
+    .definition {
+      background-color: #fffde7;
+      border: 2px dashed #cfd8dc;
+      min-height: 50px;
+      color: #6d4c41;
+    }
+
+    .definition:hover {
+      border-color: #90a4ae;
+      background-color: #f0f4c3;
+    }
+
+    .matched {
+      background-color: #c8e6c9 !important;
+      border: none !important;
+      color: #2e7d32 !important;
+    }
+
+    @media (max-width: 600px) {
+      .word, .definition {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 WORD MATCH</h1>
+  <p>Drag the words onto their correct meanings</p>
+
+  <div class="container" id="words"></div>
+  <div class="container" id="definitions"></div>
+
+  <script>
+    const fullLibrary = [
+      { word: "Happy", definition: "Feeling joyful" },
+      { word: "Fast", definition: "Moving quickly" },
+      { word: "Cold", definition: "Low in temperature" },
+      { word: "Big", definition: "Large in size" },
+      { word: "Small", definition: "Little in size" },
+      { word: "Hot", definition: "High in temperature" },
+      { word: "Smart", definition: "Very intelligent" },
+      { word: "Strong", definition: "Having great power" },
+      { word: "Soft", definition: "Gentle to touch" },
+      { word: "Hard", definition: "Difficult or solid" },
+      { word: "Slow", definition: "Not fast" },
+      { word: "Bright", definition: "Giving off lots of light" },
+      { word: "Dark", definition: "Without light" },
+      { word: "Old", definition: "Having lived for many years" },
+      { word: "Young", definition: "Early in life" },
+      { word: "Kind", definition: "Caring and nice" },
+      { word: "Mean", definition: "Not nice" },
+      { word: "Clean", definition: "Free from dirt" },
+      { word: "Dirty", definition: "Not clean" },
+      { word: "Tall", definition: "Having great height" },
+      { word: "Short", definition: "Not tall" },
+      { word: "Funny", definition: "Causing laughter" },
+      { word: "Serious", definition: "Not joking" },
+      { word: "Brave", definition: "Not afraid" },
+      { word: "Scared", definition: "Afraid" },
+      { word: "Beautiful", definition: "Pleasing to the eye" },
+      { word: "Ugly", definition: "Not pleasing to the eye" },
+      { word: "Rich", definition: "Having a lot of money" },
+      { word: "Poor", definition: "Having little money" },
+      { word: "Polite", definition: "Showing good manners" },
+      { word: "Rude", definition: "Showing bad manners" },
+      { word: "Healthy", definition: "In good health" },
+      { word: "Sick", definition: "Not healthy" },
+      { word: "Loud", definition: "High volume" },
+      { word: "Quiet", definition: "Low volume" },
+      { word: "Wet", definition: "Covered in water" },
+      { word: "Dry", definition: "Not wet" },
+      { word: "Full", definition: "Containing a lot" },
+      { word: "Empty", definition: "Containing nothing" },
+      { word: "Early", definition: "Before expected time" },
+      { word: "Late", definition: "After expected time" }
+    ];
+
+    const selectedPairs = fullLibrary.sort(() => 0.5 - Math.random()).slice(0, 6);
+
+    const shuffledWords = [...selectedPairs].sort(() => 0.5 - Math.random());
+    const shuffledDefs = [...selectedPairs].sort(() => 0.5 - Math.random());
+
+    const wordContainer = document.getElementById('words');
+    const defContainer = document.getElementById('definitions');
+
+    shuffledWords.forEach(item => {
+      const wordEl = document.createElement('div');
+      wordEl.className = 'word';
+      wordEl.innerText = item.word;
+      wordEl.draggable = true;
+      wordEl.dataset.word = item.word;
+
+      wordEl.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', item.word);
+      });
+
+      wordContainer.appendChild(wordEl);
+    });
+
+    shuffledDefs.forEach(item => {
+      const defEl = document.createElement('div');
+      defEl.className = 'definition';
+      defEl.innerText = item.definition;
+      defEl.dataset.definition = item.definition;
+      defEl.dataset.word = item.word;
+
+      defEl.addEventListener('dragover', (e) => {
+        e.preventDefault();
+      });
+
+      defEl.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const draggedWord = e.dataTransfer.getData('text/plain');
+        if (draggedWord === defEl.dataset.word) {
+          const wordEl = [...document.querySelectorAll('.word')].find(w => w.dataset.word === draggedWord);
+          wordEl.classList.add('matched');
+          defEl.classList.add('matched');
+          wordEl.draggable = false;
+          defEl.innerText = `${draggedWord} = ${defEl.dataset.definition}`;
+        }
+      });
+
+      defContainer.appendChild(defEl);
+    });
+  </script>
+</body>
+</html>

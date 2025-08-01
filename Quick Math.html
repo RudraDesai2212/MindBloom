@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quick Math - MindBloom</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+      text-align: center;
+      padding: 40px 20px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #555;
+    }
+
+    #question {
+      font-size: 2em;
+      margin: 30px 0;
+      color: #34495e;
+    }
+
+    input[type="number"] {
+      font-size: 1.5em;
+      padding: 10px;
+      width: 120px;
+      border-radius: 8px;
+      border: 2px solid #ccc;
+      transition: border 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+
+    button {
+      font-size: 1.1em;
+      padding: 12px 20px;
+      margin: 12px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #2980b9;
+      transform: scale(1.05);
+    }
+
+    #result {
+      font-size: 1.4em;
+      margin-top: 25px;
+      font-weight: bold;
+      color: #2ecc71;
+      min-height: 2em;
+    }
+
+    #game {
+      margin-top: 40px;
+    }
+
+    .op-btns {
+      margin-top: 30px;
+    }
+
+    .op-btns button {
+      background-color: #2ecc71;
+    }
+
+    .op-btns button:hover {
+      background-color: #27ae60;
+    }
+
+    #change-skill {
+      margin-top: 30px;
+    }
+
+    #change-skill button {
+      background-color: #f39c12;
+    }
+
+    #change-skill button:hover {
+      background-color: #e67e22;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Choose Your Math Operation</h1>
+  <p>Select an operation to begin:</p>
+
+  <div class="op-btns">
+    <button onclick="startGame('+')">Addition</button>
+    <button onclick="startGame('-')">Subtraction</button>
+    <button onclick="startGame('*')">Multiplication</button>
+    <button onclick="startGame('/')">Division</button>
+  </div>
+
+  <div id="game" style="display:none;">
+    <div id="question"></div>
+    <input type="number" id="answer" />
+    <button onclick="checkAnswer()" id="submitBtn">Submit</button>
+    <div id="result"></div>
+
+    <div id="change-skill">
+      <button onclick="resetGame()">Change Skill</button>
+    </div>
+  </div>
+
+  <script>
+    let num1, num2, correctAnswer, currentOp;
+
+    function startGame(operation) {
+      currentOp = operation;
+      document.querySelector('h1').innerText = `🧠 ${operation} Practice`;
+      document.querySelector('p').style.display = 'none';
+      document.querySelectorAll('.op-btns button').forEach(btn => btn.style.display = 'none');
+      document.getElementById('game').style.display = 'block';
+
+      const answerInput = document.getElementById('answer');
+      answerInput.addEventListener('keydown', function handleEnter(e) {
+        if (e.key === 'Enter') {
+          document.getElementById('submitBtn').click();
+        }
+      });
+
+      generateQuestion();
+    }
+
+    function generateQuestion() {
+      num1 = Math.floor(Math.random() * 20) + 1;
+      num2 = Math.floor(Math.random() * 20) + 1;
+
+      if (currentOp === '-') {
+        if (num2 > num1) [num1, num2] = [num2, num1];
+        correctAnswer = num1 - num2;
+      } else if (currentOp === '*') {
+        correctAnswer = num1 * num2;
+      } else if (currentOp === '/') {
+        correctAnswer = num1;
+        num2 = Math.floor(Math.random() * 10) + 1;
+        num1 = correctAnswer * num2;
+      } else {
+        correctAnswer = num1 + num2;
+      }
+
+      document.getElementById('question').innerText = `What is ${num1} ${currentOp} ${num2}?`;
+      const answerInput = document.getElementById('answer');
+      answerInput.value = '';
+      document.getElementById('result').innerText = '';
+      answerInput.focus();
+    }
+
+    function checkAnswer() {
+      const answerInput = document.getElementById('answer');
+      const userAnswer = parseFloat(answerInput.value);
+      const result = document.getElementById('result');
+
+      if (userAnswer === correctAnswer) {
+        result.style.color = '#2ecc71';
+        result.innerText = '✅ Correct! Great job!';
+        setTimeout(generateQuestion, 1500);
+      } else {
+        result.style.color = '#e74c3c';
+        result.innerText = `❌ Oops! Try again.`;
+        answerInput.value = '';
+        answerInput.focus();
+      }
+    }
+
+    function resetGame() {
+      document.querySelector('h1').innerText = '🧠 Choose Your Math Operation';
+      document.querySelector('p').style.display = 'block';
+      document.querySelectorAll('.op-btns button').forEach(btn => btn.style.display = 'inline-block');
+      document.getElementById('game').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

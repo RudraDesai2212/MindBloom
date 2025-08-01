@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WORD GUESS - MINDBLOOM</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f8ff;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 2em;
+      color: #333;
+      text-transform: uppercase;
+    }
+    #wordle-game {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    input[type="text"] {
+      font-size: 1.2em;
+      padding: 10px;
+      width: 80%;
+      max-width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-transform: uppercase;
+    }
+    button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .tile {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 8px;
+      background-color: #e0e0e0;
+      color: #000;
+      text-transform: uppercase;
+    }
+    .correct {
+      background-color: #6aaa64;
+      color: white;
+    }
+    .present {
+      background-color: #c9b458;
+      color: white;
+    }
+    .absent {
+      background-color: #787c7e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔤 WORD GUESS GAME</h1>
+  <div id="wordle-game">
+    <input type="text" id="guess" maxlength="5" placeholder="ENTER 5-LETTER WORD">
+    <button onclick="submitGuess()">SUBMIT</button>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    const wordList = ["apple", "chair", "table", "bread", "house", "grass", "water", "light", "happy", "smile",
+    "plant", "sleep", "dream", "floor", "drink", "spoon", "clean", "sharp", "heart", "fruit",
+    "sweet", "lemon", "laugh", "cloud", "river", "stone", "dance", "green", "round", "black",
+    "white", "books", "clock", "peace", "music", "shine", "brown", "quiet", "storm", "sunny",
+    "windy", "fresh", "sugar", "dress", "paint", "clear", "party", "drive", "brush", "phone",
+    "close", "hands", "grand", "socks", "roomy", "timer", "awake", "juice", "north", "south",
+    "tiger", "zebra", "sheep", "beach", "trees", "earth", "stars", "night", "candy", "world",
+    "paper", "right", "lefty", "early", "alone", "group", "shell", "climb", "torch", "pizza",
+    "wheel", "mouse", "plain", "quick", "thick", "mango", "angel", "chill", "brave", "money",
+    "arrow", "toast", "grace", "space", "crisp", "smoke", "light", "frost", "peace", "cabin"];
+    const secretWord = wordList[Math.floor(Math.random() * wordList.length)].toLowerCase();
+    const output = document.getElementById('output');
+
+    function submitGuess() {
+      const input = document.getElementById('guess');
+      const guess = input.value.toLowerCase();
+      input.value = '';
+
+      if (guess.length !== 5 || !/^[a-z]{5}$/.test(guess)) {
+        alert('PLEASE ENTER A VALID 5-LETTER WORD.');
+        return;
+      }
+
+      const row = document.createElement('div');
+      row.className = 'row';
+
+      for (let i = 0; i < 5; i++) {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.textContent = guess[i].toUpperCase();
+
+        if (guess[i] === secretWord[i]) {
+          tile.classList.add('correct');
+        } else if (secretWord.includes(guess[i])) {
+          tile.classList.add('present');
+        } else {
+          tile.classList.add('absent');
+        }
+
+        row.appendChild(tile);
+      }
+
+      output.appendChild(row);
+
+      if (guess === secretWord) {
+        const win = document.createElement('p');
+        win.style.color = 'green';
+        win.style.fontWeight = 'bold';
+        win.textContent = '🎉 CONGRATULATIONS! YOU GUESSED THE WORD!';
+        output.appendChild(win);
+      }
+    }
+  </script>
+</body>
+</html>

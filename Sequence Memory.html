@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sequence Memory - MindBloom</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background: #f3f9ff;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      font-size: 2rem;
+    }
+    #game-board {
+      display: grid;
+      grid-template-columns: repeat(2, 120px);
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .btn {
+      width: 120px;
+      height: 120px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+      opacity: 0.9;
+      transition: transform 0.1s, background-color 0.1s;
+    }
+    .btn:active {
+      transform: scale(0.95);
+    }
+    .red { background: #e74c3c; }
+    .green { background: #2ecc71; }
+    .blue { background: #3498db; }
+    .yellow { background: #f1c40f; color: #333; }
+    button#start-btn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #level-display {
+      margin-top: 20px;
+      font-size: 1.4rem;
+    }
+    #feedback {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Sequence Memory</h1>
+  <p>Repeat the color sequence by clicking the buttons</p>
+  <div id="game-board">
+    <button class="btn red" id="red"></button>
+    <button class="btn green" id="green"></button>
+    <button class="btn blue" id="blue"></button>
+    <button class="btn yellow" id="yellow"></button>
+  </div>
+  <button id="start-btn">Start Game</button>
+  <div id="level-display"></div>
+  <div id="feedback"></div>
+
+  <script>
+    const colors = ["red", "green", "blue", "yellow"];
+    let gameSequence = [];
+    let playerSequence = [];
+    let level = 0;
+
+    const startBtn = document.getElementById("start-btn");
+    const levelDisplay = document.getElementById("level-display");
+    const feedback = document.getElementById("feedback");
+
+    function playSound(color) {
+      const audio = new Audio(`https://s3.amazonaws.com/freecodecamp/simonSound${colors.indexOf(color)+1}.mp3`);
+      audio.play();
+    }
+
+    function flashButton(color) {
+      const btn = document.getElementById(color);
+      const originalColor = btn.style.backgroundColor;
+      btn.style.backgroundColor = "white";
+      playSound(color);
+      setTimeout(() => {
+        btn.style.backgroundColor = "";
+      }, 300);
+    }
+
+    function nextSequence() {
+      playerSequence = [];
+      level++;
+      feedback.textContent = "";
+      levelDisplay.textContent = `Level: ${level}`;
+      const randomColor = colors[Math.floor(Math.random() * 4)];
+      gameSequence.push(randomColor);
+      let i = 0;
+      const interval = setInterval(() => {
+        flashButton(gameSequence[i]);
+        i++;
+        if (i >= gameSequence.length) clearInterval(interval);
+      }, 600);
+    }
+
+    function checkSequence(index) {
+      if (playerSequence[index] !== gameSequence[index]) {
+        feedback.textContent = "❌ Wrong sequence! Game over.";
+        resetGame();
+        return;
+      }
+      if (playerSequence.length === gameSequence.length) {
+        setTimeout(() => {
+          nextSequence();
+        }, 1000);
+      }
+    }
+
+    function resetGame() {
+      level = 0;
+      gameSequence = [];
+      playerSequence = [];
+      levelDisplay.textContent = "";
+    }
+
+    document.querySelectorAll(".btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        const color = e.target.id;
+        playerSequence.push(color);
+        flashButton(color);
+        checkSequence(playerSequence.length - 1);
+      });
+    });
+
+    startBtn.addEventListener("click", () => {
+      resetGame();
+      nextSequence();
+    });
+  </script>
+</body>
+</html>
